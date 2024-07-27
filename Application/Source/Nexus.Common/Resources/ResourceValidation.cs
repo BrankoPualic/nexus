@@ -21,4 +21,6 @@ public static class ResourceValidation
 	public static string Invalid_Credentials => "The Username, Email or Password is incorrect.";
 
 	public static string Invalid => "{0} is invalid.";
+
+	public static string File_Too_Large => "{0} size is too large. Maximum allowed size is {1}.";
 }

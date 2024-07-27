@@ -1,13 +1,15 @@
-﻿using Nexus.Common.Constants;
+﻿using Microsoft.AspNetCore.Http;
+using Nexus.Common.Constants;
 using Nexus.Common.Extensions;
 using Nexus.Common.Resources;
 using Nexus.Core.Dtos._Base;
 using Nexus.Core.Model.Enumerators;
 using Nexus.Core.Model.Models.Application;
+using Nexus.Infrastructure.Interfaces;
 
 namespace Nexus.Core.Dtos.Auth;
 
-public class SignupDto : BaseDto
+public class SignupDto : BaseImageUploadDto
 {
 	public string FirstName { get; set; } = string.Empty;
 
@@ -23,13 +25,15 @@ public class SignupDto : BaseDto
 
 	public string ConfirmPassword { get; set; } = string.Empty;
 
+	public DateOnly DateOfBirth { get; set; }
+
 	public string? Biography { get; set; }
 
-	public DateOnly DateOfBirth { get; set; }
+	public IFormFile? Image { get; set; }
 
 	public SignupDetailsDto Details { get; set; }
 
-	public void ToModel(User model, IUserManager userManager)
+	public async Task ToModel(User model, IUserManager userManager, ICloudinaryService cloudinaryService)
 	{
 		model.FirstName = FirstName;
 		model.LastName = LastName;
@@ -39,7 +43,7 @@ public class SignupDto : BaseDto
 		model.Password = userManager.HashPassword(Password);
 		model.Biography = Biography;
 		model.DateOfBirth = DateOfBirth;
-		model.ImageUrl = null; // Should implement logic to let user pick his image on signup
+		(model.ImageUrl, model.PublicId) = await UploadImage(cloudinaryService, Image);
 		model.Details = Details.SerializeJsonObject();
 	}
 
@@ -110,6 +114,10 @@ public class SignupDto : BaseDto
 
 		if (DateOfBirth < ValidationConstants.MINIMUM_DATEONLY)
 			Errors.AddError(nameof(DateOfBirth), ResourceValidation.Invalid.FormatString(nameof(DateOfBirth)));
+
+		if (Image.IsNotNullOrEmpty())
+			if (Image?.Length > ValidationConstants.FILE_SIZE_10MB)
+				Errors.AddError(nameof(Image), ResourceValidation.File_Too_Large.FormatString(nameof(Image), "10MB"));
 
 		if (!DateOfBirth.IsEqualOrOlderThan(16))
 			Errors.AddError(nameof(DateOfBirth), ResourceValidation.Minimum_Age.FormatString("16"));

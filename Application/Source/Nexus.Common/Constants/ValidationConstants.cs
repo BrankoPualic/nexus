@@ -11,4 +11,6 @@ public static class ValidationConstants
 	public static readonly DateOnly MINIMUM_DATEONLY = new(1900, 1, 1);
 
 	public static readonly DateTime MINIMUM_DATETIME = new(1900, 1, 1, 0, 0, 0);
+
+	public const int FILE_SIZE_10MB = 10 * 1024 * 1024;
 }

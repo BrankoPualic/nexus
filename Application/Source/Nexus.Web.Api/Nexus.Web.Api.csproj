@@ -15,6 +15,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Nexus.Core\Nexus.Core.csproj" />
+		<ProjectReference Include="..\Nexus.Infrastructure.DependencyRegister\Nexus.Infrastructure.DependencyRegister.csproj" />
 	</ItemGroup>
 
 	<Target Name="CompileTypeScript" />

@@ -12,6 +12,8 @@ public class User : AuditedEntity<long>
 
 	public string? ImageUrl { get; set; }
 
+	public string? PublicId { get; set; }
+
 	public string Email { get; set; } = string.Empty;
 
 	public string Password { get; set; } = string.Empty;

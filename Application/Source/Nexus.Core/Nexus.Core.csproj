@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Nexus.Common\Nexus.Common.csproj" />
     <ProjectReference Include="..\Nexus.Core.Model\Nexus.Core.Model.csproj" />
+    <ProjectReference Include="..\Nexus.Infrastructure\Nexus.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
