@@ -4,6 +4,7 @@ using Nexus.Web.Api.ReinforcedTypings.Generator;
 using Reinforced.Typings.Ast.TypeNames;
 using Reinforced.Typings.Fluent;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Nexus.Web.Api.ReinforcedTypings;
 
@@ -33,8 +34,8 @@ public static class FluentConfiguration
 
 		// Enums
 
-		var commonAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Common");
-		var enums = commonAssembly
+		var coreModelAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Core.Model");
+		var enums = coreModelAssembly
 			.GetTypes()
 			.Where(t => t.IsEnum &&
 						t.Namespace != null &&
@@ -51,7 +52,10 @@ public static class FluentConfiguration
 		var coreAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Core");
 		var dtos = coreAssembly
 			.GetTypes()
-			.Where(t => t.IsClass && t.Namespace != null && t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Core.Dtos"));
+			.Where(t => t.IsClass
+				&& t.Namespace != null
+				&& t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Core.Dtos")
+				&& !t.IsDefined(typeof(CompilerGeneratedAttribute), false));
 
 		builder.ExportAsInterfaces(
 			dtos
