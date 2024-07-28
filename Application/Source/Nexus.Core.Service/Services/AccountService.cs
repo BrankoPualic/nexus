@@ -24,7 +24,7 @@ public class AccountService(
 		model.ToModel(user.Id);
 
 		db.Create(model);
-		await db.SaveChangesAsync();
+		await db.SaveChangesAsync(false);
 
 		TokenDto tokenDto = new()
 		{
