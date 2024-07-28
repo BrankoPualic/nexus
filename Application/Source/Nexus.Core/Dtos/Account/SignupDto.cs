@@ -45,6 +45,13 @@ public class SignupDto : BaseImageUploadDto
 		model.DateOfBirth = DateOfBirth;
 		(model.ImageUrl, model.PublicId) = await UploadImage(cloudinaryService, Image);
 		model.Details = Details.SerializeJsonObject();
+
+		model.Roles =
+		[
+			new UserRole{
+				RoleId = (int)eRole.Member
+			}
+		];
 	}
 
 	public override void ValidateOnCreateOrUpdate()

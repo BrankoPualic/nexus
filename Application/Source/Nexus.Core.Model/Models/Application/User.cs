@@ -23,4 +23,7 @@ public class User : AuditedEntity<long>
 	public DateOnly DateOfBirth { get; set; }
 
 	public string Details { get; set; } = string.Empty;
+
+	[InverseProperty(nameof(User))]
+	public virtual ICollection<UserRole> Roles { get; set; } = [];
 }

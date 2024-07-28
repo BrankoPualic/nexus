@@ -1,7 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Nexus.Core.Dtos._Base;
 using Nexus.Core.Model.Models._Base;
-using System.Text.RegularExpressions;
 
 namespace Nexus.Core.Service;
 

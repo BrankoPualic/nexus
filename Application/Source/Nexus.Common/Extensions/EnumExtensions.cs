@@ -29,4 +29,7 @@ public static class EnumExtensions
 	public static int ToInt(this Enum value) => Convert.ToInt32(value);
 
 	public static string ToStringValue(this Enum value) => Convert.ToInt32(value).ToString();
+
+	public static string[] GetEnumNames<T>(this IEnumerable<int> enums) where T : struct, Enum
+		=> enums.Any() ? enums.Select(_ => ((T)(object)_).ToString()).ToArray() : [];
 }

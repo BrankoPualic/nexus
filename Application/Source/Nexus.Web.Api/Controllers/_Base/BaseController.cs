@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Nexus.Core.ResponseWrapper;
+using Nexus.Core;
 
 namespace Nexus.Web.Api.Controllers._Base;
 
@@ -7,11 +7,11 @@ namespace Nexus.Web.Api.Controllers._Base;
 [ApiController]
 public class BaseController : ControllerBase
 {
-	public IActionResult ResultBadRequest(ResponseWrapper response) => response.IsSuccess ? Ok() : BadRequest(response.Errors);
+	public IActionResult Result(ResponseWrapper response) => response.IsSuccess ? Ok() : BadRequest(response.Errors);
 
-	public IActionResult ResultBadRequest(ResponseWrapper response, string message) => response.IsSuccess ? Ok(message) : BadRequest(response.Errors);
+	public IActionResult Result(ResponseWrapper response, string message) => response.IsSuccess ? Ok(message) : BadRequest(response.Errors);
 
-	public IActionResult ResultBadRequest<T>(ResponseWrapper<T> response) => response.IsSuccess ? Ok(response.Data) : BadRequest(response.Errors);
+	public IActionResult Result<T>(ResponseWrapper<T> response) => response.IsSuccess ? Ok(response.Data) : BadRequest(response.Errors);
 
 	public IActionResult ResultCreated(ResponseWrapper response) => response.IsSuccess ? Created() : BadRequest(response.Errors);
 
