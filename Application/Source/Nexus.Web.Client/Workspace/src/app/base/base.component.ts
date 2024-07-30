@@ -1,53 +1,61 @@
+import { Injectable, OnDestroy } from '@angular/core';
 import { eRole } from '../_generated/enums';
-import { ModelError } from '../models/error.model';
+import { IModelError } from '../models/error.model';
 import { AccountService } from '../services/account.service';
+import { ErrorService } from '../services/error.service';
 import { PageLoaderService } from '../services/page-loader.service';
-
-export interface IBaseComponent {
-  errors: ModelError[];
-  loading: boolean;
-  hasAccess: boolean;
-
-  hasError(key: string): boolean;
-}
-
-export abstract class BaseComponent implements IBaseComponent {
-  errors: ModelError[] = [];
+import { Subject, takeUntil } from 'rxjs';
+import { IBaseComponent } from '../models/base-component.model';
+@Injectable()
+export abstract class BaseComponent implements IBaseComponent, OnDestroy {
+  errors: IModelError[] = [];
   private _loading: boolean = false;
   hasAccess: boolean = false;
+  private _destroy$ = new Subject<void>();
 
   constructor(
     protected accountService: AccountService,
+    protected errorService: ErrorService,
     protected loaderService: PageLoaderService
-  ) {}
+  ) {
+    errorService.errors$
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((_) => (this.errors = _ ?? []));
+    loaderService.loaderState$
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((_) => (this.loading = _));
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
 
   // Loader
+
   get loading(): boolean {
     return this._loading;
   }
 
   set loading(_: boolean) {
-    this._loading = _;
-    if (_) this.loaderService?.showLoader();
-    else this.loaderService?.hideLoader();
+    if (_) this.loaderService.showLoader();
+    else this.loaderService.hideLoader();
   }
 
   // Error handling
 
-  protected addError(error: ModelError | ModelError[]): void {
-    if (error.isArray()) this.errors.push(...(error as ModelError[]));
-    else this.errors.push(error as ModelError);
+  protected addError(error: IModelError | IModelError[]): void {
+    this.errorService.addError(error);
   }
 
   hasError(key: string): boolean {
-    var values = key.replace(/\s+/g, '').split(',');
-    return this.errors.some((e) => values.some((v) => e.key === v));
+    return this.errorService.hasError(key);
   }
 
   // User access
 
   setAccess(...roles: eRole[]): void {
-    this.hasAccess = this.accountService?.hasAccess(...roles) ?? false;
+    this.hasAccess = this.accountService.hasAccess(...roles) ?? false;
   }
 }
 

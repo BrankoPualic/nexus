@@ -72,9 +72,8 @@ export class AccountService {
   }
 
   hasAccess(...roles: eRole[]): boolean {
-    if (!this.currentUserSource.getValue()?.roles) return false;
-    return roles.some((role) =>
-      this.currentUserSource.getValue()?.roles?.includes(eRole[role])
-    );
+    const currentUser = this.currentUserSource.getValue();
+    if (!currentUser?.roles) return false;
+    return roles.some((role) => currentUser.roles?.includes(eRole[role]));
   }
 }
