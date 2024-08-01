@@ -6,14 +6,12 @@ declare global {
 }
 
 function formatString(this: string, ...args: string[]): string {
-  return this.replace(/{(\d+)}/g, (match, number) =>
-    args[number] ? args[number] : match
-  );
+  return this.replace(/{(\d+)}/g, (match, number) => (args[number] ? args[number] : match));
 }
 
 function capitalize(this: string): string {
   return this.split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 }
 

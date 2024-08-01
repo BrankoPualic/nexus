@@ -1,0 +1,8 @@
+/node_modules
+.vscode/*
+README.md
+server.ts
+src/app/_generated/*
+tsconfig*
+/dist
+/public

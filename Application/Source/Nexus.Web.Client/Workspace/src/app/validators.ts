@@ -15,7 +15,7 @@ export function matchValues(matchTo: string, fieldName: string): ValidatorFn {
 }
 
 export function minimumAgeValidator(minAge: number): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
+  return (control: AbstractControl): Record<string, number> | null => {
     const value = control.value;
     if (!value) {
       return null;

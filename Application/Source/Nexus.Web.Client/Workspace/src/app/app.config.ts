@@ -1,19 +1,11 @@
-import {
-  ApplicationConfig,
-  Provider,
-  provideZoneChangeDetection,
-} from '@angular/core';
+import { ApplicationConfig, Provider, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { AccountController } from './_generated/services';
 import { SettingsService } from './services/settings.service';
-import {
-  provideHttpClient,
-  withFetch,
-  withInterceptors,
-} from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import './extensions/observable-extension';

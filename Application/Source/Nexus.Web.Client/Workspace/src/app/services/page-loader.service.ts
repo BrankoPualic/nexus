@@ -8,8 +8,6 @@ export class PageLoaderService {
   private loaderSubject = new BehaviorSubject<boolean>(false);
   loaderState$ = this.loaderSubject.asObservable();
 
-  constructor() {}
-
   showLoader() {
     this.loaderSubject.next(true);
   }

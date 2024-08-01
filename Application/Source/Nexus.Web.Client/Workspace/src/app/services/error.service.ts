@@ -14,9 +14,8 @@ export class ErrorService {
   }
 
   addError(error: IModelError | IModelError[]) {
-    let currentErrors = this.errors;
-    if (currentErrors?.isArray())
-      currentErrors.push(...(error as IModelError[]));
+    const currentErrors = this.errors;
+    if (currentErrors?.isArray()) currentErrors.push(...(error as IModelError[]));
     else currentErrors?.push(error as IModelError);
   }
 
@@ -24,8 +23,8 @@ export class ErrorService {
     const errors = this.errorsSource.getValue();
 
     if (errors) {
-      var values = key.replace(/\s+/g, '').split(',');
-      return errors?.some((e) => values.some((v) => e.key === v));
+      const values = key.replace(/\s+/g, '').split(',');
+      return errors?.some(e => values.some(v => e.key === v));
     }
     return false;
   }

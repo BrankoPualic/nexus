@@ -16,24 +16,24 @@ export class AccountService {
 
   constructor(
     private router: Router,
-    private accountController: AccountController
+    private accountController: AccountController,
   ) {}
 
   signin(user: ISigninDto) {
     return this.accountController.Signin(user).pipe(
-      map((result) => {
+      map(result => {
         if (result) this.setCurrentUser(result);
         return result;
-      })
+      }),
     );
   }
 
   signup(user: ISignupDto) {
     return this.accountController.Signup(user).pipe(
-      map((result) => {
+      map(result => {
         if (result) this.setCurrentUser(result);
         return result;
-      })
+      }),
     );
   }
 
@@ -54,9 +54,9 @@ export class AccountService {
       token: result.token,
       tokenExpiryDate: DateTime.fromMillis(tokenInfo.exp * 1000).toJSDate(),
     };
-    Array.isArray(tokenInfo.role)
-      ? (userSource.roles = tokenInfo.role)
-      : userSource.roles?.push(tokenInfo.role);
+
+    if (tokenInfo.role.isArray()) userSource.roles = tokenInfo.role;
+    else userSource.roles?.push(tokenInfo.role);
 
     localStorage.setItem('token', result.token);
     this.currentUserSource.next(userSource);
@@ -74,6 +74,6 @@ export class AccountService {
   hasAccess(...roles: eRole[]): boolean {
     const currentUser = this.currentUserSource.getValue();
     if (!currentUser?.roles) return false;
-    return roles.some((role) => currentUser.roles?.includes(eRole[role]));
+    return roles.some(role => currentUser.roles?.includes(eRole[role]));
   }
 }

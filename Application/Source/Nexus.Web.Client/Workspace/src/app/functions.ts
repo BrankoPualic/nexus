@@ -1,17 +1,10 @@
 // Utility
 
-function nameof<T extends Object>(
-  exp: ((obj: T) => any) | { new (...params: any[]): T }
-): string {
+function nameof<T extends object>(exp: ((obj: T) => any) | (new (...params: any[]) => T)): string {
   const fnStr = exp.toString();
 
-  if (
-    fnStr.substring(0, 6) == 'class ' &&
-    fnStr.substring(0, 8) != 'class =>'
-  ) {
-    return cleanseAssertionOperators(
-      fnStr.substring('class '.length, fnStr.indexOf(' {'))
-    );
+  if (fnStr.substring(0, 6) == 'class ' && fnStr.substring(0, 8) != 'class =>') {
+    return cleanseAssertionOperators(fnStr.substring('class '.length, fnStr.indexOf(' {')));
   }
 
   if (fnStr.indexOf('=>') !== -1) {

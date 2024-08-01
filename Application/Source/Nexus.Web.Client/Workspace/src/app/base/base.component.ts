@@ -9,21 +9,17 @@ import { IBaseComponent } from '../models/base-component.model';
 @Injectable()
 export abstract class BaseComponent implements IBaseComponent, OnDestroy {
   errors: IModelError[] = [];
-  private _loading: boolean = false;
-  hasAccess: boolean = false;
+  private _loading = false;
+  hasAccess = false;
   private _destroy$ = new Subject<void>();
 
   constructor(
     protected accountService: AccountService,
     protected errorService: ErrorService,
-    protected loaderService: PageLoaderService
+    protected loaderService: PageLoaderService,
   ) {
-    errorService.errors$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((_) => (this.errors = _ ?? []));
-    loaderService.loaderState$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((_) => (this.loading = _));
+    errorService.errors$.pipe(takeUntil(this._destroy$)).subscribe(_ => (this.errors = _ ?? []));
+    loaderService.loaderState$.pipe(takeUntil(this._destroy$)).subscribe(_ => (this.loading = _));
   }
 
   ngOnDestroy(): void {
@@ -59,6 +55,6 @@ export abstract class BaseComponent implements IBaseComponent, OnDestroy {
   }
 }
 
-export class BaseComponentGeneric<T extends Object> extends BaseComponent {
+export class BaseComponentGeneric<T extends object> extends BaseComponent {
   nameof = (exp: (obj: T) => any) => nameof<T>(exp);
 }
