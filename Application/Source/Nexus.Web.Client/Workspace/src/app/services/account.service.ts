@@ -55,7 +55,7 @@ export class AccountService {
       tokenExpiryDate: DateTime.fromMillis(tokenInfo.exp * 1000).toJSDate(),
     };
 
-    if (tokenInfo.role.isArray()) userSource.roles = tokenInfo.role;
+    if (Array.isArray(tokenInfo.roles)) userSource.roles = tokenInfo.role;
     else userSource.roles?.push(tokenInfo.role);
 
     localStorage.setItem('token', result.token);

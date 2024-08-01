@@ -15,8 +15,8 @@ export class ErrorService {
 
   addError(error: IModelError | IModelError[]) {
     const currentErrors = this.errors;
-    if (currentErrors?.isArray()) currentErrors.push(...(error as IModelError[]));
-    else currentErrors?.push(error as IModelError);
+    if (Array.isArray(currentErrors)) currentErrors.push(...(error as IModelError[]));
+    else currentErrors!.push(error as IModelError);
   }
 
   hasError(key: string): boolean {

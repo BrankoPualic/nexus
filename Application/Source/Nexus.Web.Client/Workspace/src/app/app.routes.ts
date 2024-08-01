@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
-import { Constants } from './constatnts';
+import { Constants } from './constants/constatnts';
 
 export const routes: Routes = [
   // Autentication and Authorization (Account)
+
+  {
+    path: '',
+    redirectTo: Constants.ROUTE_AUTH,
+    pathMatch: 'full',
+  },
 
   {
     path: Constants.ROUTE_AUTH,

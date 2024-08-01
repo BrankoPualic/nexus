@@ -10,7 +10,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import './extensions/observable-extension';
 import './extensions/string-extension';
-import './extensions/object-extension';
 
 export const appConfig: ApplicationConfig = {
   providers: [
