@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import * as constants from '../../constants';
 import { globalModules } from '../../_global.modules';
+import { ConstantsComponent } from '../../base/constants.component';
 @Component({
   selector: 'app-not-found',
   standalone: true,
@@ -17,7 +17,4 @@ import { globalModules } from '../../_global.modules';
   `,
   styles: ``,
 })
-export class NotFoundComponent {
-  Constants = constants.Constants;
-  Icons = constants.IconConstants;
-}
+export class NotFoundComponent extends ConstantsComponent {}

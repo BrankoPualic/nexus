@@ -6,8 +6,12 @@ import { ErrorService } from '../services/error.service';
 import { PageLoaderService } from '../services/page-loader.service';
 import { Subject, takeUntil } from 'rxjs';
 import { IBaseComponent } from '../models/base-component.model';
+import { ConstantsComponent } from './constants.component';
 @Injectable()
-export abstract class BaseComponent implements IBaseComponent, OnDestroy {
+export abstract class BaseComponent
+  extends ConstantsComponent
+  implements IBaseComponent, OnDestroy
+{
   errors: IModelError[] = [];
   private _loading = false;
   hasAccess = false;
@@ -18,6 +22,8 @@ export abstract class BaseComponent implements IBaseComponent, OnDestroy {
     protected errorService: ErrorService,
     protected loaderService: PageLoaderService,
   ) {
+    super();
+
     errorService.errors$.pipe(takeUntil(this._destroy$)).subscribe(_ => (this.errors = _ ?? []));
     loaderService.loaderState$.pipe(takeUntil(this._destroy$)).subscribe(_ => (this.loading = _));
   }
