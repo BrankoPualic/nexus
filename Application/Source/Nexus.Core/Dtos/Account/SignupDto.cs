@@ -61,11 +61,11 @@ public class SignupDto : BaseImageUploadDto
 
 		if (FirstName.IsNotNullOrWhiteSpace())
 		{
-			if (FirstName.Length > ValidationMaximumCharacters.Twenty.ToInt())
-				Errors.AddError(nameof(FirstName), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(FirstName), ValidationMaximumCharacters.Twenty.ToStringValue()));
+			if (FirstName.Length > eValidationMaximumCharacters.Twenty.ToInt())
+				Errors.AddError(nameof(FirstName), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(FirstName), eValidationMaximumCharacters.Twenty.ToStringValue()));
 
-			if (FirstName.Length < ValidationMinimumCharacters.Three.ToInt())
-				Errors.AddError(nameof(FirstName), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(FirstName), ValidationMinimumCharacters.Three.ToStringValue()));
+			if (FirstName.Length < eValidationMinimumCharacters.Three.ToInt())
+				Errors.AddError(nameof(FirstName), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(FirstName), eValidationMinimumCharacters.Three.ToStringValue()));
 		}
 
 		if (LastName.IsNullOrWhiteSpace())
@@ -73,20 +73,20 @@ public class SignupDto : BaseImageUploadDto
 
 		if (LastName.IsNotNullOrWhiteSpace())
 		{
-			if (LastName.Length > ValidationMaximumCharacters.Thirty.ToInt())
-				Errors.AddError(nameof(LastName), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(LastName), ValidationMaximumCharacters.Thirty.ToStringValue()));
+			if (LastName.Length > eValidationMaximumCharacters.Thirty.ToInt())
+				Errors.AddError(nameof(LastName), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(LastName), eValidationMaximumCharacters.Thirty.ToStringValue()));
 
-			if (LastName.Length < ValidationMinimumCharacters.Three.ToInt())
-				Errors.AddError(nameof(LastName), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(LastName), ValidationMinimumCharacters.Three.ToStringValue()));
+			if (LastName.Length < eValidationMinimumCharacters.Three.ToInt())
+				Errors.AddError(nameof(LastName), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(LastName), eValidationMinimumCharacters.Three.ToStringValue()));
 		}
 
 		if (MiddleName.IsNotNullOrWhiteSpace())
 		{
-			if (MiddleName?.Length > ValidationMaximumCharacters.Twenty.ToInt())
-				Errors.AddError(nameof(MiddleName), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(MiddleName), ValidationMaximumCharacters.Twenty.ToStringValue()));
+			if (MiddleName?.Length > eValidationMaximumCharacters.Twenty.ToInt())
+				Errors.AddError(nameof(MiddleName), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(MiddleName), eValidationMaximumCharacters.Twenty.ToStringValue()));
 
-			if (MiddleName?.Length < ValidationMinimumCharacters.Three.ToInt())
-				Errors.AddError(nameof(MiddleName), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(MiddleName), ValidationMinimumCharacters.Three.ToStringValue()));
+			if (MiddleName?.Length < eValidationMinimumCharacters.Three.ToInt())
+				Errors.AddError(nameof(MiddleName), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(MiddleName), eValidationMinimumCharacters.Three.ToStringValue()));
 		}
 
 		if (Email.IsNullOrWhiteSpace())
@@ -94,8 +94,8 @@ public class SignupDto : BaseImageUploadDto
 
 		if (Email.IsNotNullOrWhiteSpace())
 		{
-			if (Email.Length > ValidationMaximumCharacters.Sixty.ToInt())
-				Errors.AddError(nameof(Email), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Email), ValidationMaximumCharacters.Sixty.ToStringValue()));
+			if (Email.Length > eValidationMaximumCharacters.Sixty.ToInt())
+				Errors.AddError(nameof(Email), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Email), eValidationMaximumCharacters.Sixty.ToStringValue()));
 
 			if (!Email.IsValidFormat(ValidationConstants.REGEX_EMAIL))
 				Errors.AddError(nameof(Email), ResourceValidation.Wrong_Format.FormatString(nameof(Email)));
@@ -116,8 +116,8 @@ public class SignupDto : BaseImageUploadDto
 				Errors.AddError(nameof(ConfirmPassword), ResourceValidation.Dont_Match.FormatString(nameof(Password), nameof(ConfirmPassword)));
 
 		if (Biography.IsNotNullOrWhiteSpace())
-			if (Biography?.Length > ValidationMaximumCharacters.FiveHundred.ToInt())
-				Errors.AddError(nameof(Biography), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Biography), ValidationMaximumCharacters.FiveHundred.ToStringValue()));
+			if (Biography?.Length > eValidationMaximumCharacters.FiveHundred.ToInt())
+				Errors.AddError(nameof(Biography), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Biography), eValidationMaximumCharacters.FiveHundred.ToStringValue()));
 
 		if (DateOfBirth < ValidationConstants.MINIMUM_DATEONLY)
 			Errors.AddError(nameof(DateOfBirth), ResourceValidation.Invalid.FormatString(nameof(DateOfBirth)));
@@ -131,11 +131,11 @@ public class SignupDto : BaseImageUploadDto
 
 		if (Details.Phone.IsNotNullOrWhiteSpace())
 		{
-			if (Details.Phone?.Length > ValidationMaximumCharacters.Fifteen.ToInt())
-				Errors.AddError(nameof(Details.Phone), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Details.Phone), ValidationMaximumCharacters.Fifteen.ToStringValue()));
+			if (Details.Phone?.Length > eValidationMaximumCharacters.Fifteen.ToInt())
+				Errors.AddError(nameof(Details.Phone), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Details.Phone), eValidationMaximumCharacters.Fifteen.ToStringValue()));
 
-			if (Details.Phone?.Length < ValidationMinimumCharacters.Eight.ToInt())
-				Errors.AddError(nameof(Details.Phone), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(Details.Phone), ValidationMinimumCharacters.Eight.ToStringValue()));
+			if (Details.Phone?.Length < eValidationMinimumCharacters.Eight.ToInt())
+				Errors.AddError(nameof(Details.Phone), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(Details.Phone), eValidationMinimumCharacters.Eight.ToStringValue()));
 		}
 
 		if (Details.Country.IsNullOrEmpty())
@@ -148,11 +148,11 @@ public class SignupDto : BaseImageUploadDto
 
 			if (Details.Country.Name.IsNotNullOrWhiteSpace())
 			{
-				if (Details.Country.Name.Length < ValidationMinimumCharacters.Three.ToInt())
-					Errors.AddError(nameof(Details.Country), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(Details.Country), ValidationMinimumCharacters.Three.ToStringValue()));
+				if (Details.Country.Name.Length < eValidationMinimumCharacters.Three.ToInt())
+					Errors.AddError(nameof(Details.Country), ResourceValidation.Minimum_Characters_Not_Reached.FormatString(nameof(Details.Country), eValidationMinimumCharacters.Three.ToStringValue()));
 
-				if (Details.Country.Name.Length > ValidationMaximumCharacters.Sixty.ToInt())
-					Errors.AddError(nameof(Details.Country), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Details.Country), ValidationMaximumCharacters.Sixty.ToStringValue()));
+				if (Details.Country.Name.Length > eValidationMaximumCharacters.Sixty.ToInt())
+					Errors.AddError(nameof(Details.Country), ResourceValidation.Maximum_Characters_Exceeded.FormatString(nameof(Details.Country), eValidationMaximumCharacters.Sixty.ToStringValue()));
 			}
 		}
 	}

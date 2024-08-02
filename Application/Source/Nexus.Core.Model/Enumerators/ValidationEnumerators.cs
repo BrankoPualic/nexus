@@ -1,6 +1,6 @@
 ﻿namespace Nexus.Core.Model.Enumerators;
 
-public enum ValidationMaximumCharacters
+public enum eValidationMaximumCharacters
 {
 	Fifteen = 15,
 	Twenty = 20,
@@ -9,7 +9,7 @@ public enum ValidationMaximumCharacters
 	FiveHundred = 500
 }
 
-public enum ValidationMinimumCharacters
+public enum eValidationMinimumCharacters
 {
 	Three = 3,
 	Eight = 8

@@ -6,10 +6,11 @@ import { ErrorService } from '../services/error.service';
 import { PageLoaderService } from '../services/page-loader.service';
 import { Subject, takeUntil } from 'rxjs';
 import { IBaseComponent } from '../models/base-component.model';
-import { ConstantsComponent } from './constants.component';
+import { BaseConstantsComponent } from './base-constants.component';
+import { Functions } from '../functions';
 @Injectable()
 export abstract class BaseComponent
-  extends ConstantsComponent
+  extends BaseConstantsComponent
   implements IBaseComponent, OnDestroy
 {
   errors: IModelError[] = [];
@@ -62,5 +63,5 @@ export abstract class BaseComponent
 }
 
 export class BaseComponentGeneric<T extends object> extends BaseComponent {
-  nameof = (exp: (obj: T) => any) => nameof<T>(exp);
+  nameof = (exp: (obj: T) => any) => Functions.nameof<T>(exp);
 }

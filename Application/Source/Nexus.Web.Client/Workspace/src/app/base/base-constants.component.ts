@@ -1,6 +1,6 @@
 import * as constants from '../constants';
 
-export class ConstantsComponent {
+export class BaseConstantsComponent {
   Constants = constants.Constants;
   Icons = constants.IconConstants;
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { globalModules } from '../../_global.modules';
-import { ConstantsComponent } from '../../base/constants.component';
+import { ConstantsComponent } from '../../base/base-constants.component';
 @Component({
   selector: 'app-not-found',
   standalone: true,

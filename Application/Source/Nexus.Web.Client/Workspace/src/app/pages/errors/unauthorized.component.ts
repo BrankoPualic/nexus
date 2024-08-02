@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { globalModules } from '../../_global.modules';
 import { RouterLink } from '@angular/router';
-import { ConstantsComponent } from '../../base/constants.component';
+import { ConstantsComponent } from '../../base/base-constants.component';
 
 @Component({
   selector: 'app-unauthorized',
