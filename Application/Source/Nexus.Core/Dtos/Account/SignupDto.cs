@@ -11,6 +11,10 @@ namespace Nexus.Core.Dtos.Auth;
 
 public class SignupDto : BaseImageUploadDto
 {
+	public SignupDto()
+	{
+		Details = new SignupDetailsDto();
+	}
 	public string FirstName { get; set; } = string.Empty;
 
 	public string? MiddleName { get; set; }

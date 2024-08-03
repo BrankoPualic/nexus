@@ -7,7 +7,7 @@ import { ITokenDto } from './interfaces';
 import { ISignupDto } from './interfaces';
 import { ISigninDto } from './interfaces';
 
-@Injectable() export class BaseController
+@Injectable() export abstract class BaseController
 {
 	constructor (protected httpClient: HttpClient, protected settingsService: SettingsService) { } 
 }

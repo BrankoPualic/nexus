@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { eRole } from '../_generated/enums';
 import { IModelError } from '../models/error.model';
 import { AccountService } from '../services/account.service';
@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { IBaseComponent } from '../models/base-component.model';
 import { BaseConstantsComponent } from './base-constants.component';
 import { Functions } from '../functions';
+import { NameofOptions } from '../models/function-options.model';
 @Injectable()
 export abstract class BaseComponent
   extends BaseConstantsComponent
@@ -26,7 +27,7 @@ export abstract class BaseComponent
     super();
 
     errorService.errors$.pipe(takeUntil(this._destroy$)).subscribe(_ => (this.errors = _ ?? []));
-    loaderService.loaderState$.pipe(takeUntil(this._destroy$)).subscribe(_ => (this.loading = _));
+    loaderService.loaderState$.pipe(takeUntil(this._destroy$)).subscribe(_ => (this._loading = _));
   }
 
   ngOnDestroy(): void {
@@ -47,12 +48,16 @@ export abstract class BaseComponent
 
   // Error handling
 
-  protected addError(error: IModelError | IModelError[]): void {
+  protected addError(error: Record<string, string[]>): void {
     this.errorService.addError(error);
   }
 
   hasError(key: string): boolean {
     return this.errorService.hasError(key);
+  }
+
+  cleanErrors(): void {
+    this.errorService.cleanErrors();
   }
 
   // User access
@@ -63,5 +68,5 @@ export abstract class BaseComponent
 }
 
 export class BaseComponentGeneric<T extends object> extends BaseComponent {
-  nameof = (exp: (obj: T) => any) => Functions.nameof<T>(exp);
+  nameof = (exp: (obj: T) => any, options?: NameofOptions) => Functions.nameof<T>(exp, options);
 }

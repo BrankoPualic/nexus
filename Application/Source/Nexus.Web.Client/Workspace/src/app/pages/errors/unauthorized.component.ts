@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { globalModules } from '../../_global.modules';
 import { RouterLink } from '@angular/router';
-import { ConstantsComponent } from '../../base/base-constants.component';
+import { BaseConstantsComponent } from '../../base/base-constants.component';
 
 @Component({
   selector: 'app-unauthorized',
   standalone: true,
   imports: [...globalModules, RouterLink],
   template: `
-    <div class="container text-center">
+    <div class="text-center">
       <h2>Unauthorized!</h2>
       <h3>401</h3>
       <button class="btn btn-primary" [routerLink]="[Constants.ROUTE_HOME]">
@@ -18,4 +18,4 @@ import { ConstantsComponent } from '../../base/base-constants.component';
   `,
   styles: ``,
 })
-export class UnauthorizedComponent extends ConstantsComponent {}
+export class UnauthorizedComponent extends BaseConstantsComponent {}

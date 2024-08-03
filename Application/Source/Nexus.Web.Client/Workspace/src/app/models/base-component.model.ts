@@ -6,4 +6,5 @@ export interface IBaseComponent {
   hasAccess: boolean;
 
   hasError(key: string): boolean;
+  cleanErrors(): void;
 }

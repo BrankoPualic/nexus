@@ -32,7 +32,7 @@ export interface ISignupDto extends IBaseImageUploadDto
 	confirmPassword: string;
 	dateOfBirth: Date;
 	biography?: string;
-	image?: any;
+	image?: File | null;
 	details: ISignupDetailsDto;
 }
 export interface ITokenDto

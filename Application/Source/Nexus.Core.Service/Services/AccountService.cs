@@ -11,7 +11,8 @@ public class AccountService(
 	IDatabaseContext context,
 	IUserManager userManager,
 	ITokenService tokenService,
-	ICloudinaryService cloudinaryService) : BaseService(context), IAccountService
+	ICloudinaryService cloudinaryService)
+	: BaseService(context), IAccountService
 {
 	public async Task<ResponseWrapper<TokenDto>> Signin(SigninDto signinDto)
 	{

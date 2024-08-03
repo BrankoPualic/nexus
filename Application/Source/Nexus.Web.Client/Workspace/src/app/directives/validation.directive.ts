@@ -1,13 +1,14 @@
 import { Directive, ElementRef, input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ErrorService } from '../services/error.service';
 import { IModelError } from '../models/error.model';
 
 @Directive({
   selector: '[appValidation]',
+  standalone: true,
 })
 export class ValidationDirective implements OnInit, OnDestroy {
-  errorKey = input<string>();
+  appValidation = input<string>();
   private _destroy$ = new Subject<void>();
   private errorElement: HTMLElement | null = null;
 
@@ -18,7 +19,9 @@ export class ValidationDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.errorService.errors$.pipe(takeUntil(this._destroy$)).subscribe(_ => this.handleErrors(_));
+    this.errorService.errors$.subscribe(_ => {
+      this.handleErrors(_);
+    });
   }
 
   ngOnDestroy(): void {
@@ -32,29 +35,63 @@ export class ValidationDirective implements OnInit, OnDestroy {
   private handleErrors(errors: IModelError[] | null): void {
     if (!errors) return;
 
-    if (this.errorElement) {
-      this.renderer.removeChild(this.el.nativeElement.parentNode, this.errorElement);
-      this.errorElement = null;
-    }
+    // Remove existing error elements if any
+    const existingErrors = this.el.nativeElement.querySelectorAll('.validation-feedback');
+    existingErrors.forEach((element: HTMLElement) => {
+      this.renderer.removeChild(this.el.nativeElement, element);
+    });
 
-    const error = errors.find(_ => _.key === this.errorKey());
+    const error = errors.find(_ => _.key === this.appValidation());
+    const formElements = this.el.nativeElement.querySelectorAll('input, select, textarea');
+
+    formElements.forEach((element: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      // Remove both error and valid classes if any
+      this.renderer.removeClass(element, 'is-invalid');
+      this.renderer.removeClass(element, 'is-valid');
+
+      // Check if the element has a value
+      const hasValue = element.value && element.value.trim().length > 0;
+
+      // Check if there is an error for this key
+      const hasError =
+        error &&
+        error.errors.some(errMsg => {
+          // Check if the error message relates to this specific form element
+          return errMsg.includes(element.id);
+        });
+
+      if (hasValue && !hasError) {
+        // Apply the 'is-valid' class if there is a value and no error
+        this.renderer.addClass(element, 'is-valid');
+      } else if (hasError) {
+        // Apply the 'is-invalid' class if there is an error
+        this.renderer.addClass(element, 'is-invalid');
+      }
+    });
 
     if (error) {
       // Apply error styles to the form element
-      this.renderer.setStyle(this.el.nativeElement, 'border', '1px solid red');
+      formElements.forEach((element: HTMLElement) => {
+        this.renderer.addClass(element, 'is-invalid');
+      });
 
-      // Create and style the error message element
-      this.errorElement = this.renderer.createElement('div');
-      this.renderer.setStyle(this.errorElement, 'color', 'red');
-      this.renderer.setStyle(this.errorElement, 'font-size', 'small');
-      this.renderer.setStyle(this.errorElement, 'margin-top', '4px');
-      this.errorElement!.innerText = error.errors.join(', ');
+      // Create and style the error message elements
+      error.errors.forEach(errMsg => {
+        const errorElement = this.renderer.createElement('div');
+        this.renderer.addClass(errorElement, 'validation-feedback');
+        this.renderer.setStyle(errorElement, 'color', 'red');
+        this.renderer.setStyle(errorElement, 'font-size', 'small');
+        this.renderer.setStyle(errorElement, 'margin-top', '4px');
+        errorElement.innerText = errMsg;
 
-      // Append the error message element below the form element
-      this.renderer.appendChild(this.el.nativeElement.parentNode, this.errorElement);
+        // Append each error message element as a child to the container div
+        this.renderer.appendChild(this.el.nativeElement, errorElement);
+      });
     } else {
-      // Remove error styles if no error
-      this.renderer.removeStyle(this.el.nativeElement, 'border');
+      // Remove error class from form elements if no error
+      formElements.forEach((element: HTMLElement) => {
+        this.renderer.removeClass(element, 'is-invalid');
+      });
     }
   }
 }

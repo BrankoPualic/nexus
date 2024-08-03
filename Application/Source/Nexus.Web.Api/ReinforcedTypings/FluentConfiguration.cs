@@ -96,7 +96,8 @@ public static class FluentConfiguration
 			.Substitute(typeof(DateTime), new RtSimpleTypeName("Date"))
 			.Substitute(typeof(DateTime?), new RtSimpleTypeName("Date | null"))
 			.Substitute(typeof(DateOnly), new RtSimpleTypeName("Date"))
-			.Substitute(typeof(DateOnly?), new RtSimpleTypeName("Date | null"));
+			.Substitute(typeof(DateOnly?), new RtSimpleTypeName("Date | null"))
+			.Substitute(typeof(IFormFile), new RtSimpleTypeName("File | null"));
 
 		return config;
 	}

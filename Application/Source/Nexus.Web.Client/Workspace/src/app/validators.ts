@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, ValidatorFn } from '@angular/forms';
 import { DateTime } from 'luxon';
 
 export function matchValues(matchTo: string, fieldName: string): ValidatorFn {
@@ -32,4 +32,14 @@ export function minimumAgeValidator(minAge: number): ValidatorFn {
       return { minimumAge: minAge };
     }
   };
+}
+
+export function allowedImageExtensions(control: FormControl) {
+  const file = control.value;
+  if (file) {
+    const validFormats = ['image/png', 'image/jpeg', 'image/jpg'];
+    const fileFormat = file.type;
+    return validFormats.includes(fileFormat) ? null : { invalidFormat: true };
+  }
+  return null;
 }

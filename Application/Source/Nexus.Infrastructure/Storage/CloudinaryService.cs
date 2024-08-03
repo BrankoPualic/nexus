@@ -1,8 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using Nexus.Common;
 using Nexus.Infrastructure.Interfaces;
 
 namespace Nexus.Infrastructure.Storage;
@@ -11,17 +9,17 @@ public class CloudinaryService : ICloudinaryService
 {
 	private readonly Cloudinary _cloudinary;
 
-	public CloudinaryService(IOptions<CloudinarySettings> config)
-	{
-		var acc = new Account
-		(
-			config.Value.CloudName,
-			config.Value.ApiKey,
-			config.Value.ApiSercret
-		);
+	//public CloudinaryService(IOptions<CloudinarySettings> config)
+	//{
+	//	var acc = new Account
+	//	(
+	//		config.Value.CloudName,
+	//		config.Value.ApiKey,
+	//		config.Value.ApiSercret
+	//	);
 
-		_cloudinary = new(acc);
-	}
+	//	_cloudinary = new(acc);
+	//}
 
 	public async Task<ImageUploadResult> UploadPhotoAsync(IFormFile file)
 	{

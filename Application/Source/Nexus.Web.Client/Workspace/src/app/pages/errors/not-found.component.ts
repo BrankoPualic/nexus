@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { globalModules } from '../../_global.modules';
-import { ConstantsComponent } from '../../base/base-constants.component';
+import { BaseConstantsComponent } from '../../base/base-constants.component';
 @Component({
   selector: 'app-not-found',
   standalone: true,
   imports: [...globalModules, RouterLink],
   template: `
-    <div class="container text-center">
+    <div class="text-center">
       <h2>Page Not Found!</h2>
       <h3>404</h3>
       <button class="btn btn-primary" [routerLink]="[Constants.ROUTE_HOME]">
@@ -17,4 +17,4 @@ import { ConstantsComponent } from '../../base/base-constants.component';
   `,
   styles: ``,
 })
-export class NotFoundComponent extends ConstantsComponent {}
+export class NotFoundComponent extends BaseConstantsComponent {}

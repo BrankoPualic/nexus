@@ -10,7 +10,7 @@ public class AccountController(IAccountService accountService) : BaseController
 {
 	[HttpPost]
 	[AngularMethod(typeof(TokenDto))]
-	public async Task<IActionResult> Signup(SignupDto signupDto) => Result(await accountService.Signup(signupDto));
+	public async Task<IActionResult> Signup([FromForm] SignupDto signupDto) => Result(await accountService.Signup(signupDto));
 
 	[HttpPost]
 	[AngularMethod(typeof(TokenDto))]

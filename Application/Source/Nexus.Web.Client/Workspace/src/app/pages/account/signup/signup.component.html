@@ -1,1 +1,140 @@
-<p>signup works!</p>
+<div class="col-xs-12">
+  <div class="col-sm-8 col-xs-12 mx-auto mt-5">
+    <h3 class="text-center">Signup</h3>
+    <form [formGroup]="form" (onSubmit)="submit()" enctype="multipart/form-data">
+      @if (part1) {
+        <div class="mb-3" appValidation="FirstName">
+          <label for="firstName" class="form-label">First Name <app-required /></label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+        </div>
+
+        <div class="mb-3" appValidation="MiddleName">
+          <label for="middleName" class="form-label">Middle Name</label>
+          <input type="text" class="form-control" id="middleName" formControlName="middleName" />
+        </div>
+
+        <div class="mb-3" appValidation="LastName">
+          <label for="lastName" class="form-label">Last Name <app-required /></label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+        </div>
+
+        <div class="mb-3" appValidation="Username">
+          <label for="username" class="form-label">Username <app-required /></label>
+          <input type="text" class="form-control" id="username" formControlName="username" />
+        </div>
+
+        <div class="mb-3" appValidation="Email">
+          <label for="email" class="form-label">Email Address <app-required /></label>
+          <input type="email" class="form-control" id="email" formControlName="username" />
+        </div>
+
+        <div class="mb-3" appValidation="Password">
+          <label for="password" class="form-label">Password <app-required /></label>
+          <input type="password" class="form-control" id="password" formControlName="password" />
+        </div>
+
+        <div class="mb-3" appValidation="ConfirmPassword">
+          <label for="confirmPassword" class="form-label">Confirm Password <app-required /></label>
+          <input
+            type="password"
+            class="form-control"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+          />
+        </div>
+      } @else if (part2) {
+        <div class="mb-3" appValidation="Image">
+          <label for="image" class="mb-2">Profile Image</label>
+          <div
+            [ngClass]="{
+              'profile-picture-placeholder-100 pointer': !image,
+              'profile-picture-100 hover-effect': image,
+            }"
+            aria-hidden="true"
+            (click)="file.click()"
+            (keyup)="file.click()"
+            aria-describedby="imageHelp"
+          >
+            @if (image) {
+              <img [src]="imageUrl" alt="Selected image" />
+            }
+            <fa-icon [icon]="Icons.ARROW_UP_FROM_BRACKET" class="icon-size-30"></fa-icon>
+          </div>
+          <input
+            type="file"
+            formControlName="image"
+            class="d-none"
+            id="image"
+            #file
+            (change)="onFileSelected($event)"
+          />
+          <div id="imageHelp" class="form-text">
+            If not uploaded universal avatar photo will be used based on gender.
+          </div>
+        </div>
+
+        <div class="mb-3" appValidation="Biography">
+          <label for="bio" class="form-label">Biography</label>
+          <textarea
+            id="bio"
+            class="form-control"
+            formControlName="biography"
+            rows="5"
+            style="resize: none"
+          ></textarea>
+        </div>
+
+        <div formGroupName="details">
+          <div class="mb-3" appValidation="Details.Phone">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="number" class="form-control" id="phone" formControlName="phone" />
+          </div>
+
+          <div class="mb-3" appValidation="Details.Country">
+            <label for="country" class="form-label">Country <app-required /></label>
+            <select class="form-select pointer" id="country" formControlName="country">
+              <option value="0"></option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-check" aria-describedby="privacyHelp">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="privacy"
+                formControlName="privacy"
+              />
+              <label class="form-check-label pointer" for="privacy">
+                Do you want your profile to be private?</label
+              >
+            </div>
+            <div id="privacyHelp" class="form-text">
+              This setting can be changed later in profile settings.
+            </div>
+          </div>
+        </div>
+      }
+
+      <div class="col-xs-12">
+        <button
+          class="btn float-start"
+          [ngClass]="{ 'btn-secondary': part1, 'btn-primary': part2 }"
+          (click)="back()"
+          [disabled]="part1"
+        >
+          Back
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary float-end"
+          (click)="part1 ? next() : submit()"
+          [disabled]="part2 && !form.invalid"
+        >
+          {{ part2 ? 'Submit' : 'Next' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

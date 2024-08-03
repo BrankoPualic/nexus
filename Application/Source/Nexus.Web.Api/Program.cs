@@ -19,15 +19,16 @@ builder.Host
 
 var app = builder.Build();
 
+
+app.UseHttpsRedirection();
+app.UseRouting();
+
 app.UseCors(builder => builder
 	.AllowAnyHeader()
 	.AllowAnyMethod()
 	.AllowCredentials()
 	.WithOrigins("https://localhost:4200")
 	);
-
-app.UseHttpsRedirection();
-app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();

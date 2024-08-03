@@ -5,7 +5,7 @@ namespace Nexus.Web.Api.Controllers._Base;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class BaseController : ControllerBase
+public abstract class BaseController : ControllerBase
 {
 	public IActionResult Result(ResponseWrapper response) => response.IsSuccess ? Ok() : BadRequest(response.Errors);
 
